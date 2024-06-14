@@ -4,6 +4,7 @@ rule:
     namespace: host-interaction/process/create
     authors:
       - joakim@intezer.com
+      - mehunhoff@google.com
     scopes:
       static: basic block
       dynamic: call
@@ -18,6 +19,10 @@ rule:
         - os: android
       - or:
         - api: execve
+        - and:
+          - match: execute syscall
+          - arch: aarch64
+          - number: 0xdd = execve
         - api: execl
         - api: execlp
         - api: execle
@@ -27,3 +32,4 @@ rule:
         - api: posix_spawn
         - api: posix_spawnp
         - api: popen
+        - api: fork
